@@ -1,0 +1,7 @@
+﻿syntax = "proto3";
+
+message ServerInformation{
+    string IPAddress = 1;
+    int32 Port = 2;
+    int32 FreeSpace = 3;
+}
