@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace FileMover.Service
 {
@@ -15,7 +16,17 @@ namespace FileMover.Service
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            var hostLifetime = host.Services.GetRequiredService<IHostApplicationLifetime>();
+
+            //当应用退出后，Flush日志
+            hostLifetime.ApplicationStopped.Register(() =>
+            {
+                NLog.LogManager.Shutdown();
+            });
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -27,6 +38,11 @@ namespace FileMover.Service
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-            });
+            })
+            .ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+            })
+            .UseNLog();
     }
 }

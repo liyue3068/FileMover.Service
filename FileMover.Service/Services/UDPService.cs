@@ -40,16 +40,13 @@ namespace FileMover.Service.Services
             IP_Util.GetLocalIPv6Address();
 
 
-            transmissionSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
-            transmissionSocket.Bind(new IPEndPoint(IPAddress.IPv6Any, 20086));
-            var multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF12::1206"));
-            transmissionSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, multicastOption);
+            //transmissionSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+            //transmissionSocket.Bind(new IPEndPoint(IPAddress.IPv6Any, 20086));
+            //var multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF12::1206"));
+            //var multicastOption = new MulticastOption(IPAddress.Parse("FF12::1206"));
+            //transmissionSocket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, multicastOption);
 
 
-            udpListener = new UdpClient(new IPEndPoint(IPAddress.IPv6Any, 20086));
-            udpListener.JoinMulticastGroup(IPAddress.Parse("FF12::1206"));
-            buffer = new byte[1024];
-            sendBuffer = new MemoryStream(buffer);
         }
 
         public async void Listen()
@@ -76,7 +73,7 @@ namespace FileMover.Service.Services
             multicastSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
             multicastSocket.Bind(new IPEndPoint(IPAddress.IPv6Any, MULTICAST_PORT));
             var multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF12::1206"));
-            multicastSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, multicastOption);
+            multicastSocket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, multicastOption);
             return Task.CompletedTask;
         }
 

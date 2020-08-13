@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -43,18 +44,19 @@ namespace FileMover.Service.Services
         public void Start()
         {
             lock (_lockObj)
-            { 
-            
+            {
+
             }
 
-            if(multicastListener!=null&&)
 
             multicastListener = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
             multicastListener.Bind(new IPEndPoint(IPAddress.IPv6Any, Port));
             var multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF12::1206"));
             multicastListener.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, multicastOption);
-        }
+            Logger<int> ff = new Logger<int>(null);
+            //((ILogger)ff)
 
+        }
 
     }
 }

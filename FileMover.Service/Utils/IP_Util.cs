@@ -19,7 +19,6 @@ namespace FileMover.Service.Utils
                     var ipv6Address = i.GetIPProperties().UnicastAddresses.Where(t => t.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6);
                     var r = ipv6Address.Where(t => t.Address.IsIPv6LinkLocal);
                 }
-
             }
             return null;
         }
